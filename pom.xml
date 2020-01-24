@@ -98,13 +98,13 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Mithun Technologies Releases Nexus Repository</name>
-	      <url>http://13.233.21.245:8081/repository/prameela-release/</url>
+	      <url>http://52.66.212.68:8081/repository/prameela-release/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Mithun Technologies Snapshot Nexus Repository </name>
-	      <url>http://13.233.21.245:8081/repository/prameela-snaphot/</url>
+	      <url>http://52.66.212.68:8081/repository/prameela-snaphot/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
