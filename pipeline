@@ -1,0 +1,47 @@
+node
+{
+     echo "GitHub BranhName ${env.BRANCH_NAME}"
+  echo "Jenkins Job Number ${env.BUILD_NUMBER}"
+  echo "Jenkins Node Name ${env.NODE_NAME}"
+  
+  echo "Jenkins Home ${env.JENKINS_HOME}"
+  echo "Jenkins URL ${env.JENKINS_URL}"
+  echo "JOB Name ${env.JOB_NAME}"
+  
+  properties([
+    buildDiscarder(logRotator(numToKeepStr: '3')),
+    pipelineTriggers([
+        pollSCM('* * * * *')
+    ])
+  ])
+    def mavenHome=tool name: "maven3.6.3"
+    stage('checkoutcode')
+    {
+        git branch: 'development', credentialsId: '27151402-9800-4a86-a3d6-068815db09a3', url: 'https://github.com/Pallavi2421/maven-web-application.git'
+    }
+    stage('build')
+    {
+        sh "${mavenHome}/bin/mvn clean package"
+    }
+    stage('executeSonarqubeReport')
+    {
+        sh "${mavenHome}/bin/mvn sonar:sonar"
+    }
+    
+    stage('uploadArtifactoryNexus')
+    {
+        sh "${mavenHome}/bin/mvn deploy"
+    }
+    stage('deploytoTomcat')
+    {
+        sshagent(['9ebdf000-ef46-4572-9620-1479fd278822']) 
+        {
+            sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@13.232.71.122:/opt/apache-tomcat-9.0.30/webapps/"
+}
+    }
+    stage('emailnotification')
+    {
+        emailext body: 'buil is completed', subject: 'build is over', to: 'prameelaponaganti@gmail.com'
+    }
+    }
+    
