@@ -19,7 +19,7 @@ node
   
  stage('Checkout')
  {
- 	git branch: 'development', credentialsId: 'bed5a851-d84d-412e-87e7-bf9ce23c0e0e', url: 'https://github.com/MithunTechnologiesDevOps/maven-web-application.git'
+ 	git branch: 'master', credentialsId: '65.0.176.53', url: 'https://github.com/Pallavi2421/maven-web-application.git'
  
  }
  /*
